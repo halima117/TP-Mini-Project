@@ -1,179 +1,151 @@
+
+
+#include<stdio.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+typedef struct {
+    char nom[50];
+    char numCompte[20];
+    char motDePasse[20];
+    float solde;
+} Compte;
 
-int main();
-  //Structure for an account
-  typedef struct
-  {
- char name[50];
-  int account_number;
-  char password[20];
-  float balance;
+Compte comptes[100];             
+int nbComptes = 0;
+void chargerComptes() {
+    FILE *f = fopen("comptes.txt", "r");
+    if (f == NULL) return;
+    while (fscanf(f, "%s %s %s %f", comptes[nbComptes].nom, comptes[nbComptes].numCompte,
+                  comptes[nbComptes].motDePasse, &comptes[nbComptes].solde) == 4) {
+        nbComptes++;
+    }
+    fclose(f);
+}
+void sauvegarderComptes() {
+    FILE *f = fopen("comptes.txt", "w");
+    for (int i = 0; i < nbComptes; i++) {
+        fprintf(f, "%s %s %s %.2f\n", comptes[i].nom, comptes[i].numCompte,
+                comptes[i].motDePasse, comptes[i].solde);
+    }
+    fclose(f);
+}
+void creerCompte() {
+    printf("Entrer votre nom : ");
+    scanf("%s", comptes[nbComptes].nom);
 
+    printf("Entrer un numero de compte : ");
+    scanf("%s", comptes[nbComptes].numCompte);
 
-   } Account;
- //Array to store accounts
-   Account accounts = [MAX_ACCOUNTS];
-   //Counter for accounts
-   int account_count = 0;
-   //Function prototypes
-   void create_account();
-   void login();
-   void deposit_money(int index);
-   void transfer_money(int index);
-   void check_balance(int index);
-   void delete_empty_account();
-   void save_to_file();
-   void load_from_file();
-   }int main()
-   int choice;
-   //Load existing accounts from file
-   load_from_file();
-   }while(1)
-   printf("\n----------Welcome to Our Bank----------\n");
-   printf("1. Create Account\n2.Login to Account\n3. Quit\n");
-   printf("Enter your choice: ");
-   scanf("%d", &choice);
-}switch (choice)
- case 1:
-     create_account() ;
-     break;
- case 2:
-    login();
-    break;
- case 3:
-    save_to_file();
-    ptrintf("Thank your for using our bank system!\n");
-    exit(0);
-    printf("Invalid choice! Please try again. \n");
-    {
-        {
+    printf("Entrer un mot de passe : ");
+    scanf("%s", comptes[nbComptes].motDePasse);
 
-          {
-   //Function to create an account
-   }void create_account()
-  } if (account_count >= MAX_ACCOUNTS)
-  printf("Bank database is full!\n");
-  return;
-  {
-      printf("Enter Name: ");
-      scanf("%s", accounts[account_count].name);
-      printf("Enter Account Number: ");
-      scanf("%d",&accounts[account_count].account_number);
-      printf("Set Password: ")
-      scanf("%s", accounts[account_count].password);
-      accounts[account_count].balance = 0;
-      printf("Account successfully created!\n");
-      ++account_count
-      save_to_file();
-      {
-          //Function to login
-         } void login()
-       int acc_num, i;
-       char pass[20];
-       printf("\n---Welcome to the Login Page ---\n");
-       printf("Enter Account Number: ");
-       scanf("%d", &acc_num);
-       printf("Enter Password: ");
-       scanf("%s" ,pass);
-       for(i = 0; i < account_count; i++);}
-       if (accounts[i].account_number == acc_num &&)
-       strcmp(accounts[i].password, pass) == 0)}
-       printf("Login successful!\n");
-       int choice;
-       while(1)}
-       printf("\n1. Deposit Money\n2. Transfer Money\n3. Check Balance\n4. Logout\n");
-       printf("Enter your choice: ");
-       scanf("%d", &choice);
-       }switch (choice);
- case 1:
-    deposit_money(i);
-    break;
- case 2:
-    transfer_money(i);
-    break;
- case 3:
-    check_balance(i);
-    break;
- case 4:
-    save_to_file();
-    return;
-    printf("Invalid Account Number or Password!\n");
-    {
-        //Function to deposit money
-        } void deposit_money(int index)
-        float amount;
-        printf("Enter amount to deposit: ");
-        scanf("%f", &amount);
-        }if(amount > 0);
-        accounts[index].balance += amount;
-        printf("Deposit successful!New balance: %.2f\n",accounts[index].balance)
-        }else{
-            printf("Invalid amount!\n");
-            {
-            //Function to transfer money
-            }void transfer_money(int index)
-            int acc_num, i;
-            float amount;
-            printf("Enter recipient Account Number: ");
-            scanf("&d", &acc_num);
-            {for(i = 0; i < account_count; i++)
-            if(accounts[i].account_number == acc_num)
-            printf("Enter amount to transfer: ");
-            scanf("%f", &amount)
-            if(amount > 0 &&  accounts[index].balance >= amount)}
-            accounts[index].balance -= amount accounts[i].balance += amount;
-            printf("Transfer successful! Your new balance:%.2f\n", accounts[index].balance);
-            } else {
-                printf("Insufficient balance or invalid amount!\n")
-                {
-                    return;
-                        {
-                       {
-   printf("Recipient account not found!\n");
-   {
-       //Function to check balance
-       }void check_balance(int index)
-       printf("Your current balance: %.2f\n" , accounts[index].balance)
-       {
-      // Function to deleter empty accounts
-      }void delete_empty_account()
-      for(int i = 0; i < account_count; i++)
-    } if (accounts[i].balance == 0)
-     }
-     for (int j = i; j < account_ count - 1; j++)
-        accounts[j] = accounts[j + 1];
-     {
-         --account_count;
-         printf("Deleted empty account successfully.\n");
-         //Adjust index
-         i--;
-         {
-             {
-          save_to_file();
-         {
-          //Function to save data to file
-          }void save_to_file()
-          FILE *file = fopen("accounts.txt", "w");
-          } if (!file)
-          printf("Error saving data! \n");
-          return;
-          {
-    for(int i = 0; i < account_count; i++)}
-    fprintf(file, "%s %d %s %.2f\n", accounts[i].name,accounts[i].account_number,accounts[i].password,accounts[i].balance)
-    {
-      fclose(file);
-      {
-      //Function to load data from file
-     } void load_from_file()
-     FILE *file = fopen("accounts.txt" , "r")
-     if(!file)return;
-     while(scanf(file, "%s %d %s %f", accounts[account_count].name,&accounts[account_count].account_number, accounts[account_count].password,&accounts[account_count].balance) != EOF)}
-     ++account_count;
-     {
-      fclose(file);
-     }
+    comptes[nbComptes].solde = 0;
+    nbComptes++;
+    sauvegarderComptes();
+    printf("Compte cree avec succes !\n");
+}
+int chercherIndex(char num[], char mdp[]) {
+    for (int i = 0; i < nbComptes; i++) {
+        if (strcmp(comptes[i].numCompte, num) == 0 &&
+            strcmp(comptes[i].motDePasse, mdp) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+void deposerArgent(Compte *c) {
+    float montant;
+    printf("Montant a deposer : ");
+    scanf("%f", &montant);
+    c->solde += montant;
+    sauvegarderComptes();
+    printf("Depot effectue. Nouveau solde : %.2f\n", c->solde);
+}
+void transfererArgent(Compte *c) {
+    char cible[20];
+    float montant;
+    printf("Entrer numero du compte destinataire : ");
+    scanf("%s", cible);
+    int index = -1;
+    for (int i = 0; i < nbComptes; i++) {
+        if (strcmp(comptes[i].numCompte, cible) == 0) {
+            index = i;
+            break;
+        }
+    }
+    if (index == -1) {
+        printf("Compte non trouve.\n");
+        return;
+    }
+    printf("Montant a transferer : ");
+    scanf("%f", &montant);
+    if (c->solde >= montant) {
+        c->solde -= montant;
+        comptes[index].solde += montant;
+        sauvegarderComptes();
+        printf("Transfert reussi.\n");
+    } else {
+        printf("Solde insuffisant.\n");
+    }
+}
+void afficherSolde(Compte *c) {
+    printf("Votre solde est : %.2f\n", c->solde);
+}
+void supprimerComptesVides() {
+    int i = 0;
+    while (i < nbComptes) {
+        if (comptes[i].solde == 0) {
+            for (int j = i; j < nbComptes - 1; j++) {
+                comptes[j] = comptes[j + 1];
+            }
+            nbComptes--;
+        } else {
+            i++;
+        }
+    }
+    sauvegarderComptes();
+    printf("Comptes vides supprimes.\n");
+}
+void seConnecter() {
+    char num[20], mdp[20];
+    printf("Numero de compte : ");
+    scanf("%s", num);
+    printf("Mot de passe : ");
+    scanf("%s", mdp);
+    int index = chercherIndex(num, mdp);
+    if (index == -1) {
+        printf("Echec de connexion.\n");
+        return;
+    }
+    printf("Connecte avec succes.\n");
 
+    int choix;
+    do {
+        printf("\n1. Deposer argent\n2. Transferer argent\n3. Voir solde\n4. Deconnexion\nVotre choix: ");
+        scanf("%d", &choix);
+        switch (choix) {
+            case 1: deposerArgent(&comptes[index]); break;
+            case 2: transfererArgent(&comptes[index]); break;
+            case 3: afficherSolde(&comptes[index]); break;
+        }
+    } while (choix != 4);
+}
+int main() {
+    chargerComptes();
+    int choix;
+    do {
+        printf("\n----- Bienvenue a Notre Banque -----\n");
+        printf("1. Creer un compte\n2. Se connecter\n3. Supprimer comptes vides\n4. Quitter\nVotre choix : ");
+        scanf("%d", &choix);
+        switch (choix) {
+            case 1: creerCompte(); break;
+            case 2: seConnecter(); break;
+            case 3: supprimerComptesVides(); break;
+        }
+    } while (choix != 4);
+    return 0;
+}
 
 
 
